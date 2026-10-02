@@ -1,0 +1,23 @@
+ORG 0H
+MOV TMOD, #20H
+MOV TH1, #-6
+MOV SCON, #50H
+SETB TR1
+
+PollHere:
+JNB RI, PollHere
+MOV A, SBUF
+CLR RI
+ADD A, #-48
+LCALL Display
+JMP PollHere
+
+Display:
+MOV DPTR, #LEDdata
+MOVC A, @A+DPTR
+MOV P1, A
+RET
+
+LEDdata:
+DB 0C0H, 0F9H, 0A4H, 0B0H, 99H, 92H, 82H, 0F8H, 80H, 90H
+END

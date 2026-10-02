@@ -1,0 +1,39 @@
+ORG 0H
+JMP Main
+ORG 23H
+JMP Serial_ISR
+
+Main:
+LCALL InitUart
+SETB ES
+SETB EA
+LoopHere:
+JMP LoopHere
+
+Serial_ISR:
+JNB TI, Check_RI
+CLR TI
+Check_RI:
+JNB RI, Serial_Done
+MOV A, SBUF
+CLR RI
+ADD A, #-48
+LCALL Display
+Serial_Done:
+RETI
+
+InitUart:
+MOV TMOD, #20H
+MOV TH1, #-6
+MOV SCON, #50H
+SETB TR1
+
+Display:
+MOV DPTR, #LEDdata
+MOVC A, @A+DPTR
+MOV P1, A
+RET
+
+LEDdata:
+DB 0C0H, 0F9H, 0A4H, 0B0H, 99H, 92H, 82H, 0F8H, 80H, 90H
+END
