@@ -8,7 +8,7 @@ Structure follows [Parallel Programming Portfolio](https://github.com/ChristianZ
 
 Other students’ `Example/` solutions; course `Materials.zip` and slides; EdSim51 saved settings and bundled books; generated SDCC files; report screenshots and duplicate development report copies.
 
-macOS metadata and nested Git repositories are excluded. Canonical sources are copied from submitted files without edits. This is an archive of student submissions with inherited course templates, not a claim of sole authorship for every line. No remote has been configured and nothing has been uploaded.
+macOS metadata and nested Git repositories are excluded. Canonical sources were extracted from submitted files and subsequently formatted and annotated on 2026-10-03. C/header token sequences and generated HEX bytes were verified against the pre-format versions; submitted files remain untouched. This is an archive of student submissions with inherited course templates, not a claim of sole authorship for every line. Published repository: `ChristianZ97/NTHUCS-2024-Fall-Operating-Systems`.
 
 ## Source archives
 

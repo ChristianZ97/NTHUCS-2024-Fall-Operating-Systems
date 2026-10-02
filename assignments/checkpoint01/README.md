@@ -10,4 +10,4 @@ Load `testcoop.hex` in EdSim51 to inspect execution. The original Makefile is re
 
 ## Submission
 
-`submission/` contains byte-exact files extracted from the original submitted ZIP. The browsable implementation above preserves submitted source bytes; no algorithm changes were made. See the root `SUBMISSIONS.md` and `CURATION.md` for provenance.
+`submission/` contains byte-exact files extracted from the original submitted ZIP. The browsable implementation is formatted and annotated for readability. Code tokens and compiled HEX bytes match the original; `submission/` remains byte-exact. See the root `SUBMISSIONS.md` and `CURATION.md` for provenance.

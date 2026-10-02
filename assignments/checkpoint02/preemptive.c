@@ -2,46 +2,52 @@
 
 #include "preemptive.h"
 
-__data __at (0x20) ThreadID curThd;
-__data __at (0x21) char savedSP[MAXTHREADS];
-__data __at (0x25) _Bool bitmap[4];
-__data __at (0x29) char thdCnt;
+/* Fixed internal-RAM layout shared with the context-switch assembly. */
+__data __at(0x20) ThreadID curThd;
+__data __at(0x21) char savedSP[MAXTHREADS];
+__data __at(0x25) _Bool bitmap[4];
+__data __at(0x29) char thdCnt;
 
-#define SAVESTATE               \
-    {                           \
-        __asm                   \
-            PUSH ACC            \
-            PUSH B              \
-            PUSH DPL            \
-            PUSH DPH            \
-            PUSH PSW            \
-        __endasm;               \
-        savedSP[curThd] = SP;   \
+/* Save registers in stack order, then record this thread's SP. */
+// clang-format off
+#define SAVESTATE                                               \
+    {                                                           \
+        __asm                                                   \
+            PUSH ACC                                            \
+            PUSH B                                              \
+            PUSH DPL                                            \
+            PUSH DPH                                            \
+            PUSH PSW                                            \
+        __endasm;                                               \
+        savedSP[curThd] = SP;                                   \
     }
+// clang-format on
 
-#define RESTORESTATE            \
-    {                           \
-        SP = savedSP[curThd];   \
-        __asm                   \
-            POP PSW             \
-            POP DPH             \
-            POP DPL             \
-            POP B               \
-            POP ACC             \
-        __endasm;               \
+/* Restore SP first, then pop registers in reverse order. */
+// clang-format off
+#define RESTORESTATE                                            \
+    {                                                           \
+        SP = savedSP[curThd];                                   \
+        __asm                                                   \
+            POP PSW                                             \
+            POP DPH                                             \
+            POP DPL                                             \
+            POP B                                               \
+            POP ACC                                             \
+        __endasm;                                               \
     }
+// clang-format on
 
 extern void main(void);
 
-void Bootstrap (void) {
-
+void Bootstrap(void) {
     EA = 0;
     bitmap[0] = 0;
     bitmap[1] = 0;
     bitmap[2] = 0;
     bitmap[3] = 0;
     thdCnt = 0;
-    
+
     TMOD = 0;
     IE = 0x82;
     TR0 = 1;
@@ -52,20 +58,28 @@ void Bootstrap (void) {
     EA = 1;
 }
 
-ThreadID ThreadCreate (FunctionPtr fp) {
-
+ThreadID ThreadCreate(FunctionPtr fp) {
     EA = 0;
-    if (thdCnt >= MAXTHREADS) return -1;
+    if (thdCnt >= MAXTHREADS)
+        return -1;
 
-    __data __at (0x30) ThreadID id = 0;
+    __data __at(0x30) ThreadID id = 0;
 
-    for (int i = 0; i < MAXTHREADS; i++) if (!bitmap[i]) {id = i; bitmap[i] = 1; break;}
+    for (int i = 0; i < MAXTHREADS; i++)
+        if (!bitmap[i]) {
+            id = i;
+            bitmap[i] = 1;
+            break;
+        }
     thdCnt++;
 
+    /* Each thread receives a 16-byte stack region. */
     savedSP[id] = 0x3F + 16 * id;
-    __data __at (0x31) char tempSP = SP;
+    __data __at(0x31) char tempSP = SP;
+    /* Build the initial frame on the new stack; fp arrives in DPTR. */
     SP = savedSP[id];
 
+    // clang-format off
     __asm
         PUSH DPL
         PUSH DPH
@@ -75,93 +89,114 @@ ThreadID ThreadCreate (FunctionPtr fp) {
         PUSH ar7
         PUSH ar7
     __endasm;
+    // clang-format on
 
+    /* Initial PSW selects register bank 0, 1, 2, or 3 for this thread. */
     switch (id) {
-        case 0:
-            __asm
-                MOV r7, #0x00
-                PUSH ar7
-            __endasm;
-            break;
+    case 0:
+        // clang-format off
+        __asm
+            MOV r7, #0x00
+            PUSH ar7
+        __endasm;
+        // clang-format on
+        break;
 
-        case 1:
-            __asm
-                MOV r7, #0x08
-                PUSH ar7
-            __endasm;
-            break;
+    case 1:
+        // clang-format off
+        __asm
+            MOV r7, #0x08
+            PUSH ar7
+        __endasm;
+        // clang-format on
+        break;
 
-        case 2:
-            __asm
-                MOV r7, #0x10
-                PUSH ar7
-            __endasm;
-            break;
+    case 2:
+        // clang-format off
+        __asm
+            MOV r7, #0x10
+            PUSH ar7
+        __endasm;
+        // clang-format on
+        break;
 
-        case 3:
-            __asm
-                MOV r7, #0x18
-                PUSH ar7
-            __endasm;
-            break;
+    case 3:
+        // clang-format off
+        __asm
+            MOV r7, #0x18
+            PUSH ar7
+        __endasm;
+        // clang-format on
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     savedSP[id] = SP;
+    /* Resume construction on the caller's stack. */
     SP = tempSP;
 
     EA = 1;
     return id;
 }
 
-void ThreadYield (void) {
-
+void ThreadYield(void) {
     EA = 0;
     SAVESTATE;
+    /* Round-robin selection skips unused thread slots. */
     do {
         curThd++;
-        if (curThd == MAXTHREADS) curThd = 0;
-        if (bitmap[curThd]) break;
+        if (curThd == MAXTHREADS)
+            curThd = 0;
+        if (bitmap[curThd])
+            break;
     } while (1);
     RESTORESTATE;
     EA = 1;
 }
 
-void ThreadExit (void) {
-
+/* Preserved submission behavior: restores context without releasing the slot. */
+void ThreadExit(void) {
     EA = 0;
     RESTORESTATE;
     EA = 1;
 }
 
-void myTimer0Handler (void) {
-
+void myTimer0Handler(void) {
     EA = 0;
     SAVESTATE;
 
+    // clang-format off
     __asm
         MOV B, R0
         MOV DPL, R1
         MOV DPH, R2
     __endasm;
+    // clang-format on
 
+    /* Round-robin selection skips unused thread slots. */
     do {
         curThd++;
-        if (curThd == MAXTHREADS) curThd = 0;
-        if (bitmap[curThd]) break;
+        if (curThd == MAXTHREADS)
+            curThd = 0;
+        if (bitmap[curThd])
+            break;
     } while (1);
 
+    // clang-format off
     __asm
         MOV R0, B
         MOV R1, DPL
         MOV R2, DPH
     __endasm;
+    // clang-format on
 
     RESTORESTATE;
 
+    // clang-format off
     __asm
         RETI
     __endasm;
+    // clang-format on
 }

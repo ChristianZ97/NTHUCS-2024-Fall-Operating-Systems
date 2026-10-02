@@ -32,7 +32,7 @@ VALIDATION.md   Local verification results
 
 ## Reproducibility
 
-There is no root build. Enter an individual project directory and follow its README. Source code is preserved without functional changes. Original reports and source files may retain names and student identifiers.
+There is no root build. Enter an individual project directory and follow its README. Showcase code is formatted and annotated without functional changes; original submissions remain byte-exact. Original reports and source files may retain names and student identifiers.
 
 ## Academic Use
 
