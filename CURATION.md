@@ -6,7 +6,7 @@ Structure follows [Parallel Programming Portfolio](https://github.com/ChristianZ
 
 ## Selection
 
-Other students’ `Example/` solutions; course `Materials.zip` and slides; EdSim51 saved settings and bundled books; generated SDCC files; report screenshots and duplicate development report copies.
+Other students’ `Example/` solutions; unused starter archives within `Materials.zip` and lecture slides; EdSim51 saved settings and bundled books; generated SDCC files; report screenshots and duplicate development report copies.
 
 macOS metadata and nested Git repositories are excluded. Canonical sources were extracted from submitted files and subsequently formatted and annotated on 2026-10-03. C/header token sequences and generated HEX bytes were verified against the pre-format versions; submitted files remain untouched. This is an archive of student submissions with inherited course templates, not a claim of sole authorship for every line. Published repository: `ChristianZ97/NTHUCS-2024-Fall-Operating-Systems`.
 
@@ -24,3 +24,7 @@ macOS metadata and nested Git repositories are excluded. Canonical sources were 
 ## EdSim51 support
 
 At the owner’s request, `tools/edsim51/` includes the original 2.1.38 runtime JARs, three local assembly examples, and new launch scripts. Runtime hashes and copyright attribution are in `tools/edsim51/THIRD_PARTY.md`. Local saved settings and slides remain excluded.
+
+## Specification inclusion — 2026-10-06
+
+At the owner’s request, original assignment PDFs are now included under each project’s `spec/`, with a root `SPECS.md` inventory. This supersedes the previous handout exclusion. Lab 0 is included where only an introductory handout exists. Student submissions and implementation files are unchanged.

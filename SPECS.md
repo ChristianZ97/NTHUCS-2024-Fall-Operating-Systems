@@ -1,0 +1,11 @@
+# Original Assignment Specifications
+
+Course-authored assignment handouts, preserved byte for byte from the local course archive. These are specifications, separate from student submissions. Copyright and authorship remain with the original course authors; inclusion does not grant a redistribution license.
+
+| Specification | Original source | Bytes | SHA-256 |
+| --- | --- | ---: | --- |
+| [assignments/checkpoint01/spec/Project Checkpoint 1 - CS 342302 Fall 2024.pdf](assignments/checkpoint01/spec/Project%20Checkpoint%201%20-%20CS%20342302%20Fall%202024.pdf) | `os Project/Labs/lab1.zip!lab1/Materials.zip!Materials/Project Checkpoint 1 - CS 342302 Fall 2024.pdf` | 132877 | `efd033b7226f9792b82ba4d8ecca82ab02ad1b854dbd5576cea4181aaa52eb14` |
+| [assignments/checkpoint02/spec/Project Checkpoint 2 - CS 342302 Fall 2024.pdf](assignments/checkpoint02/spec/Project%20Checkpoint%202%20-%20CS%20342302%20Fall%202024.pdf) | `os Project/Labs/lab2.zip!lab2/Materials.zip!Materials/Project Checkpoint 2 - CS 342302 Fall 2024.pdf` | 167711 | `62b3e59b69f9bdf3358ccfb0e3bce0444fb3c65a298e812c92c789baa45e9858` |
+| [assignments/checkpoint02/spec/Project Checkpoint 2 - CS 342302 Fall 2024 (Timer Preemption).pdf](assignments/checkpoint02/spec/Project%20Checkpoint%202%20-%20CS%20342302%20Fall%202024%20(Timer%20Preemption).pdf) | `os Project/Labs/lab2.zip!lab2/Materials.zip!Materials/Project Checkpoint 2 - CS 342302 Fall 2024 (Timer Preemption).pdf` | 1982339 | `24aafb3c642b9ce4ad40c277f950eb087b68cbdcbcf21c79a8acceddd4381e01` |
+| [assignments/checkpoint03/spec/Project Checkpoint 3 - CS 342302 Fall 2024.pdf](assignments/checkpoint03/spec/Project%20Checkpoint%203%20-%20CS%20342302%20Fall%202024.pdf) | `os Project/Labs/lab3.zip!lab3/Materials.zip!Materials/Project Checkpoint 3 - CS 342302 Fall 2024.pdf` | 140486 | `cd22057b06a5249ff12a88c8014cc09a9da33f3aa1ebec58aa75176def95ab0b` |
+| [assignments/checkpoint04/spec/Project Checkpoint 4 - CS 342302 Fall 2024.pdf](assignments/checkpoint04/spec/Project%20Checkpoint%204%20-%20CS%20342302%20Fall%202024.pdf) | `os Project/Labs/lab4.zip!lab4/Materials.zip!Materials/Project Checkpoint 4 - CS 342302 Fall 2024.pdf` | 81841 | `06f3163d11c6dd28640e2ffee8246a68b5f680c7dae5c8ef6c213d9c94420d66` |

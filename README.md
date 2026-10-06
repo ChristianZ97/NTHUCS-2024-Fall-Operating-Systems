@@ -37,3 +37,7 @@ There is no root build. Enter an individual project directory and follow its REA
 ## Academic Use
 
 Coursework preserved as a portfolio and learning reference. Follow your institution’s academic-integrity rules. Existing course-template attribution is retained. No blanket license is granted for third-party materials or for this collection.
+
+## Original Assignment Specifications
+
+See [SPECS.md](SPECS.md) for original course handouts, source locations, and SHA-256 hashes. Each checkpoint/lab keeps its handouts in `spec/`.
